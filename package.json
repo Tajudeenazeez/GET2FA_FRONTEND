@@ -1,0 +1,26 @@
+{
+  "name": "get2fa",
+  "version": "1.0.0",
+  "description": "A chrome extension to get 2FA code from user's mail",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeEmpress1/Get2FA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeEmpress1/Get2FA/issues"
+  },
+  "homepage": "https://github.com/codeEmpress1/Get2FA#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  }
+}
