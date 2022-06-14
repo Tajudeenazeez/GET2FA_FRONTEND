@@ -1,16 +1,16 @@
 {
-    "name": "Getting Two-fatcor code",
-    "description": "To get Two-FA sent from educative.io!",
-    "version": "1.0.0",
-    "manifest_version": 3,
-    "action": {
-        "default_popup": "index.html"
-      },
-      "permissions": ["storage", "activeTab", "scripting"],
-      "content_scripts": [{
-        "matches": ["*://*.educative.io/*"],
-        "js": ["content.js"]
-      }]
-  }
+  "name": "Getting Two-fatcor code",
+  "description": "To get Two-FA sent from educative.io!",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {
+      "default_popup": "index.html"
+    },
+    "permissions": ["storage", "activeTab", "scripting"],
+    "content_scripts": [{
+      "matches": ["*://*.educative.io/*", "*://*.github.com/*"],
+      "js": ["content.js"]
+    }]
+}
 
-  
+

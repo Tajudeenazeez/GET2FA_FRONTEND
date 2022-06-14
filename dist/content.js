@@ -1,17 +1,50 @@
+let currentBrowserLocation = window.location.host;
+
 async function get2FA(){
     try {
-      return await fetch('http://localhost:3000/')
+    // return await fetch("https://get-ed-2fa.herokuapp.com/")
+      return await fetch("http://localhost:3500")
         .then(response => 
             response.json()
             )
-            .then(data => {return data});
+            .then(data => {
+                return data
+            });
     } catch (error) {
         throw new Error(error)
     }
 }
 
+// return data
 
 function accessDOM() {
+    // console.log(window.location);
+    // Device Verification Code
+    if(currentBrowserLocation === "github.com"){
+        async function getGitHub2FACodeFunction() {
+        const gitInputForOTP = document.querySelector("#otp");
+        
+        if(gitInputForOTP){
+            let theGit2FACode = await get2FA();
+            gitInputForOTP.focus()
+            let decodedGit2FACode
+            try {
+                decodedGit2FACode =  window.atob(theGit2FACode)
+            } catch (error) {
+               if(error instanceof Error){
+                    decodedGit2FACode = window.atob(theGit2FACode.split("-").join(""));
+               }else{
+                throw new Error(error);
+               }  
+            }
+
+            gitInputForOTP.value = Number(decodedGit2FACode.split('Verification code: ')[1].split("\r")[0]);
+            
+            }
+        }
+        getGitHub2FACodeFunction(); 
+        
+    }else{
     const firstLoginButton = document.querySelector("div.logged-out div button:first-child");
     firstLoginButton.addEventListener("click", () => { 
         
@@ -38,6 +71,8 @@ function accessDOM() {
                 })
         }, 1000);
     })
+
+}
 }
 
 accessDOM();
