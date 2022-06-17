@@ -2,8 +2,8 @@ let currentBrowserLocation = window.location.host;
 
 async function get2FA(){
     try {
-    // return await fetch("https://get-ed-2fa.herokuapp.com/")
-      return await fetch("http://localhost:3500")
+    return await fetch("https://get-ed-2fa.herokuapp.com/")
+    //   return await fetch("http://localhost:3500")
         .then(response => 
             response.json()
             )
@@ -16,6 +16,9 @@ async function get2FA(){
 }
 
 // return data
+
+// username: snoseeds
+//  password: sno2seed2r
 
 function accessDOM() {
     // console.log(window.location);
@@ -30,8 +33,9 @@ function accessDOM() {
             let decodedGit2FACode
             try {
                 decodedGit2FACode =  window.atob(theGit2FACode)
+                
             } catch (error) {
-               if(error instanceof Error){
+               if(error instanceof  Error){
                     decodedGit2FACode = window.atob(theGit2FACode.split("-").join(""));
                }else{
                 throw new Error(error);
@@ -60,10 +64,13 @@ function accessDOM() {
                     // 1. GET THE INPUT FIELD
                     const TFAInput = modal.querySelector("input#two_factor_code");
                     let theCode = await get2FA();
-                    TFAInput.focus()
+                    console.log('from the educative code',theCode);
+                    // TFAInput.focus()
                     let codeNumber = await theCode.twoFA;
-                    TFAInput.value = codeNumber;
-                        return;                            
+                    
+                    Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set.call(TFAInput, codeNumber);
+                    TFAInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    return;                            
                     }
                     setTimeout(checkLabel, 750);    
                 }
