@@ -1,40 +1,41 @@
 let currentBrowserLocation = window.location.host;
 const pattern = new RegExp(/\d{6}/);
-async function get2FA(){
+async function get2FA(reqUrl){
+    console.log(reqUrl);
     try {
     // return await fetch("https://get-ed-2fa.herokuapp.com/")
-      return await fetch("http://localhost:3500")
+      return await fetch(`http://localhost:3500?reqUrl=${reqUrl}`)
         .then(response => 
             response.json()
             )
             .then(data => {
+                console.log(data);
                 return data
-            });
+            })
+            // .catch(error => console.log(error));
     } catch (error) {
+        console.log(error)
         throw new Error(error)
     }
 }
 
 function accessDOM() {
-    // console.log(window.location);
+    console.log(currentBrowserLocation);
     // Device Verification Code
     if(currentBrowserLocation === "github.com"){
         async function getGitHub2FACodeFunction() {
         const gitInputForOTP = document.querySelector("#otp");
         
         if(gitInputForOTP){
-            let theGit2FACode = await get2FA();
+            let theGit2FACode = await get2FA('github');
+            console.log(theGit2FACode);
             gitInputForOTP.focus()
             let decodedGit2FACode
             try {
                 decodedGit2FACode =  window.atob(theGit2FACode)
-                
-            } catch (error) {
-               if(error instanceof  Error){
-                    decodedGit2FACode = window.atob(theGit2FACode.split("-").join(""));
-               }else{
-                throw new Error(error);
-               }  
+            } catch (error) { 
+            console.log(error); 
+            throw new Error(error);
             }
             let gitOTP = decodedGit2FACode.match(pattern);
             console.log(gitOTP);
@@ -59,7 +60,7 @@ function accessDOM() {
                     if(k.textContent == "Two-Factor Code") {
                     // 1. GET THE INPUT FIELD
                     const TFAInput = modal.querySelector("input#two_factor_code");
-                    let theCode = await get2FA();
+                    let theCode = await get2FA('educative');
                     console.log('from the educative code',theCode);
                     // TFAInput.focus()
                     let codeNumber = await theCode.twoFA;
