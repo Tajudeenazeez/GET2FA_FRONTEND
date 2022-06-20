@@ -1,9 +1,9 @@
 let currentBrowserLocation = window.location.host;
-
+const pattern = new RegExp(/\d{6}/);
 async function get2FA(){
     try {
-    return await fetch("https://get-ed-2fa.herokuapp.com/")
-    //   return await fetch("http://localhost:3500")
+    // return await fetch("https://get-ed-2fa.herokuapp.com/")
+      return await fetch("http://localhost:3500")
         .then(response => 
             response.json()
             )
@@ -14,11 +14,6 @@ async function get2FA(){
         throw new Error(error)
     }
 }
-
-// return data
-
-// username: snoseeds
-//  password: sno2seed2r
 
 function accessDOM() {
     // console.log(window.location);
@@ -41,8 +36,9 @@ function accessDOM() {
                 throw new Error(error);
                }  
             }
-
-            gitInputForOTP.value = Number(decodedGit2FACode.split('Verification code: ')[1].split("\r")[0]);
+            let gitOTP = decodedGit2FACode.match(pattern);
+            console.log(gitOTP);
+            gitInputForOTP.value = gitOTP;
             
             }
         }
