@@ -3,8 +3,8 @@ const pattern = new RegExp(/\d{6}/);
 async function get2FA(reqUrl){
     console.log(reqUrl);
     try {
-    // return await fetch("https://get-ed-2fa.herokuapp.com/")
-      return await fetch(`http://localhost:3500?reqUrl=${reqUrl}`)
+    return await fetch("https://get-ed-2fa.herokuapp.com/")
+    //   return await fetch(`http://localhost:3500?reqUrl=${reqUrl}`)
         .then(response => 
             response.json()
             )
